@@ -13,7 +13,6 @@ __author__ = 'xujiankang'
 
 from flask import Flask, request
 from core import app, db
-from  turtle import *
 
 
 @app.route('/jack2', methods=['GET', 'POST'])
