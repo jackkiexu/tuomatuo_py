@@ -11,11 +11,17 @@
 """
 __author__ = 'xujiankang'
 
-from flask import Flask
+from flask import Flask, request
 from core import app, db
+from  turtle import *
 
 
-@app.route('/jack2')
-def jack():
-    
+@app.route('/jack2', methods=['GET', 'POST'])
+def jack2():
+    print 'request.data', request.data
+    print 'request.args', request.args
+    print 'request.headers', request.headers
+    print 'request.form', request.form
+    print 'request.json', request.json
+
     return 'jack'

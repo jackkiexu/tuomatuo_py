@@ -57,12 +57,12 @@ class HttpTransport(BaseTransportHandler):
         )
 
 
-@app.route('/jack')
+@app.route('/jack1')
 def jack():
     print request.data
     return 'jack'
 
-@app.route('/hello')
+@app.route('/hello1')
 def test():
     try:
         with zipkin_span(
@@ -94,6 +94,3 @@ def hello_world():
         pass
     return r.text
 
-
-if __name__ == '__main__':
-    app.run()

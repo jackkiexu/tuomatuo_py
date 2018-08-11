@@ -10,3 +10,9 @@
 -------------------------------------------------
 """
 __author__ = 'xujiankang'
+
+from core import app
+from view import tuomatuo, tuomatuo_user
+
+if __name__ == '__main__':
+    app.run()
