@@ -12,15 +12,32 @@
 __author__ = 'xujiankang'
 
 from flask import Flask, request
-from core import app, db
+from core import app, db, log
 
 
 @app.route('/jack2', methods=['GET', 'POST'])
 def jack2():
-    print 'request.data', request.data
-    print 'request.args', request.args
-    print 'request.headers', request.headers
-    print 'request.form', request.form
-    print 'request.json', request.json
+    log.info('request.args %s', request.args)
+    log.info('request.data %s', request.data)
+    log.info('request.headers %s', request.headers)
+    log.info('request.form %s', request.form)
+    log.info('request.json %s', request.json)
 
     return 'jack'
+
+
+@app.route("/hello")
+def hello_world_02():
+    return 'hello world'
+
+
+@app.route('/register', methods=['POST'])
+def register():
+    log.info( request.headers)
+    log.info( request.form)
+    log.info( request.form['name'])
+    log.info( request.form.get('name'))
+    log.info( request.form.getlist('name'))
+    log.info( request.form.get('nickname', default='little apple'))
+    return 'welcome'
+

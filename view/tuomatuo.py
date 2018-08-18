@@ -10,7 +10,7 @@ from flask import Flask, request
 from py_zipkin.zipkin import zipkin_span,create_http_headers_for_new_span
 import time
 from core.date_utils import my_date
-from core import app, db
+from core import app, db, log
 
 
 @zipkin_span(service_name='webapp', span_name='do_stuff')
@@ -18,8 +18,8 @@ def do_stuff():
     # time.sleep(2)
     headers = create_http_headers_for_new_span()
     r = requests.get('http://www.baidu.com', headers=headers)
-    print(r)
-    print(r.content)
+    log.info(r)
+    log.info(r.content)
     return 'OK'
 
 
@@ -32,11 +32,11 @@ def http_transport(encoded_span):
        host=app.config["ZIPKIN_HOST"], port=app.config["ZIPKIN_PORT"])
     headers = {"Content-Type": "application/x-thrift"}
     r=requests.post(zipkin_url, data=body, headers=headers)
-    print(type(encoded_span))
-    print(encoded_span)
-    print(body)
-    print(r)
-    print(r.content)
+    log.info(type(encoded_span))
+    log.info(encoded_span)
+    log.info(body)
+    log.info(r)
+    log.info(r.content)
 
 
 zipkin = Zipkin(sample_rate=10)
@@ -59,8 +59,9 @@ class HttpTransport(BaseTransportHandler):
 
 @app.route('/jack1')
 def jack():
-    print request.data
+    log.info(request.data)
     return 'jack'
+
 
 @app.route('/hello1')
 def test():
@@ -74,10 +75,10 @@ def test():
         ):
             do_stuff()
             # time.sleep(1)
-        print '******************************************************'
+        log.info( '******************************************************')
     except Exception as ex:
-        print '******************************************************'
-        print(ex)
+        log.info( '******************************************************')
+        log.error(ex)
         pass
 
     return "hello"
@@ -90,7 +91,7 @@ def hello_world():
     try:
         r = requests.get('http://www.baidu.com', headers= headers)
     except Exception as ex:
-        print ex
+        log.error(ex)
         pass
     return r.text
 
