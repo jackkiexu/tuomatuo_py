@@ -16,6 +16,4 @@ from core import app, log
 
 @app.before_request
 def before_request():
-    log.info(request.headers)
-    log.info(request.args)
-    log.info(request.data)
+    log.info('request.headers: %s, request.args: %s, request.data:%s ', request.headers, request.args, request.data)
