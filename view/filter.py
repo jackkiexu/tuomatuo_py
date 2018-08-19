@@ -22,5 +22,6 @@ def before_request():
 
 
 @app.after_request
-def after_request():
+def after_request(response):
     thread_local.request_id = ''
+    return response
