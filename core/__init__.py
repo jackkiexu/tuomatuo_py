@@ -6,21 +6,27 @@ from sqlalchemy import Table, Column, Integer, String, Date, Float
 from config import local_config
 import logging
 import uuid
+from threading import local
+
+thread_local = local()
 
 
 def request_id():
-    if getattr(g, 'request_id', None):
-        return g.request_id
-    original_request_id = request.headers.get('request_id', '').strip()
+    v = getattr(thread_local, 'request_id', None)
+    if v is not None and v != '':
+        return v
+    original_request_id = ''
+    if flask.has_request_context() :
+        original_request_id = request.headers.get('request_id', '').strip()
     if original_request_id  == '':
         original_request_id = uuid.uuid4()
-    g.request_id = original_request_id
+    setattr(thread_local, 'request_id', original_request_id)
     return original_request_id
 
 
 class RequestIDLogFilter(logging.Filter):
     def filter(self, record):
-        record.trace_id = request_id() if flask.has_request_context() else ''
+        record.trace_id = request_id()
         return record
 
 
