@@ -11,22 +11,9 @@ from threading import local
 thread_local = local()
 
 
-def request_id():
-    v = getattr(thread_local, 'request_id', None)
-    if v is not None and v != '':
-        return v
-    original_request_id = ''
-    if flask.has_request_context() :
-        original_request_id = request.headers.get('request_id', '').strip()
-    if original_request_id  == '':
-        original_request_id = uuid.uuid4()
-    setattr(thread_local, 'request_id', original_request_id)
-    return original_request_id
-
-
 class RequestIDLogFilter(logging.Filter):
     def filter(self, record):
-        record.trace_id = request_id()
+        record.trace_id = getattr(thread_local, 'request_id', "none")
         return record
 
 
