@@ -13,6 +13,8 @@ __author__ = 'xujiankang'
 
 from flask import Flask, request
 from core import app, db, log
+import requests
+from utils.sys_decorator import aspect
 
 
 @app.route('/jack2', methods=['GET', 'POST'])
@@ -27,6 +29,7 @@ def jack2():
 
 
 @app.route("/hello")
+@aspect('')
 def hello_world_02():
     return 'hello world'
 

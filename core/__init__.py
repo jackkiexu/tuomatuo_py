@@ -30,6 +30,7 @@ log = logger
 app = Flask(__name__)
 log.info(local_config.DB_URI)
 app.config['SQLALCHEMY_DATABASE_URI'] = local_config.DB_URI
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 
