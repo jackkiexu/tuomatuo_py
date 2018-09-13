@@ -12,7 +12,7 @@
 __author__ = 'xujiankang'
 
 from core import app
-from view import tuomatuo, tuomatuo_user, filter
+from view import tuomatuo, tuomatuo_user, filter, earth_map
 
 if __name__ == '__main__':
     app.run()

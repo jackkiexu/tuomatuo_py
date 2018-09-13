@@ -22,3 +22,15 @@ class User(db.Model):
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
+
+class TransporterGeo(db.Model):
+    __tablename__ = 'transporter_geo'
+    id = db.Column(db.BigInteger, nullable=False, primary_key=True, autoincrement=True)
+    transporter_id = db.Column(db.BigInteger, nullable=False, server_default='0')
+    lat = db.Column(db.DECIMAL, nullable=False, server_default='')
+    lng = db.Column(db.DECIMAL, nullable=False, server_default='')
+    time = db.Column(db.BigInteger, nullable=False, server_default='')
+
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
