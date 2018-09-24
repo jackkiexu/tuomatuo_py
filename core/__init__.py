@@ -13,6 +13,7 @@ from threading import local
 thread_local = local()
 root_path = os.path.dirname(os.path.abspath(__file__)) + '/../'
 
+
 class RequestIDLogFilter(logging.Filter):
     def filter(self, record):
         record.trace_id = getattr(thread_local, 'request_id', "none")
